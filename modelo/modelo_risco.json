@@ -1,0 +1,87 @@
+{
+  "versao": "rl-2026-11-10",
+  "modelo": "regressão logística",
+  "atributos": [
+    "temp_max",
+    "temp_min",
+    "temp_media",
+    "umid_media",
+    "umid_min",
+    "ic_max",
+    "dia_sen",
+    "dia_cos"
+  ],
+  "limiar": 0.55,
+  "alvo": "risco_amanha = índice de calor máximo de amanhã >= 32 °C",
+  "dados": "INMET A701 São Paulo - Mirante, horários 2016-01-01 a 2026-10-31 (portal.inmet.gov.br/dadoshistoricos)",
+  "treino": "2016-2023",
+  "teste": "2024-01 a 2026-10",
+  "metricas_teste": {
+    "PR-AUC": 0.4584,
+    "ROC-AUC": 0.9223,
+    "recall": 0.8525,
+    "precisão": 0.2737,
+    "F1": 0.4143,
+    "F2": 0.5991,
+    "acurácia": 0.8567
+  },
+  "persistencia_teste": {
+    "PR-AUC": null,
+    "ROC-AUC": null,
+    "recall": 0.4918,
+    "precisão": 0.5,
+    "F1": 0.4959,
+    "F2": 0.4934,
+    "acurácia": 0.9405
+  },
+  "versoes": {
+    "python": "3.13.18",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4"
+  },
+  "sha256": "91981148f6969969474e1c36c1c9d7156df65b5c8f9041cd67e8c6d763472359",
+  "exemplos": [
+    {
+      "dia": "2025-12-28",
+      "atributos": {
+        "temp_max": 35.9,
+        "temp_min": 22.8,
+        "temp_media": 27.670833,
+        "umid_media": 58.083333,
+        "umid_min": 24.0,
+        "ic_max": 34.726736,
+        "dia_sen": -0.038696,
+        "dia_cos": 0.999251
+      },
+      "probabilidade": 0.9925448591480747
+    },
+    {
+      "dia": "2025-12-27",
+      "atributos": {
+        "temp_max": 34.6,
+        "temp_min": 23.6,
+        "temp_media": 26.791667,
+        "umid_media": 61.75,
+        "umid_min": 31.0,
+        "ic_max": 34.304166,
+        "dia_sen": -0.055879,
+        "dia_cos": 0.998438
+      },
+      "probabilidade": 0.9825188760425037
+    },
+    {
+      "dia": "2025-07-02",
+      "atributos": {
+        "temp_max": 12.9,
+        "temp_min": 10.7,
+        "temp_media": 11.708333,
+        "umid_media": 83.083333,
+        "umid_min": 76.0,
+        "ic_max": 12.256111,
+        "dia_sen": -0.023651,
+        "dia_cos": -0.99972
+      },
+      "probabilidade": 1.1139777883520722e-06
+    }
+  ]
+}

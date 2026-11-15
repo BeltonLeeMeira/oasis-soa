@@ -1,0 +1,15 @@
+# Dependências da API Oásis (Python 3.13). Versões fixas para o servidor ficar igual ao ambiente testado.
+fastapi==0.162.4
+uvicorn==0.54.0
+SQLAlchemy==2.1.8
+alembic==1.20.1
+psycopg[binary]==3.3.8
+pydantic==2.14.3
+pydantic-settings==2.16.2
+paho-mqtt==2.2.0
+# Modelo de IA: mesmas versões do notebook do repositório oasis-ia-ml (o .joblib depende delas)
+scikit-learn==1.9.1
+numpy==2.5.4
+joblib==1.6.0
+# Fusos horários no Windows (que não traz a base de fusos do Python)
+tzdata==2026.6

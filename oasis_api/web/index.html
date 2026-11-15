@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oásis · Calor em São Paulo</title>
+  <meta name="description" content="Risco de calor agora, previsão para amanhã e pontos de água e sombra em São Paulo.">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <h1>Oásis</h1>
+    <p>Calor em São Paulo: o risco agora, a previsão de amanhã e onde há água e sombra.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="titulo-agora">
+      <h2 id="titulo-agora">Agora</h2>
+      <div id="agora" class="cartoes" aria-live="polite"><p class="carregando">Carregando...</p></div>
+    </section>
+
+    <section aria-labelledby="titulo-amanha">
+      <h2 id="titulo-amanha">Amanhã</h2>
+      <div id="amanha" aria-live="polite"><p class="carregando">Carregando...</p></div>
+    </section>
+
+    <section aria-labelledby="titulo-alertas">
+      <h2 id="titulo-alertas">Alertas ativos</h2>
+      <ul id="alertas" class="lista"><li class="carregando">Carregando...</li></ul>
+    </section>
+
+    <section aria-labelledby="titulo-pontos">
+      <h2 id="titulo-pontos">Pontos de apoio</h2>
+      <ul id="pontos" class="lista"><li class="carregando">Carregando...</li></ul>
+    </section>
+
+    <section class="dicas" aria-labelledby="titulo-dicas">
+      <h2 id="titulo-dicas">No calor forte</h2>
+      <ul>
+        <li>Beba água mesmo sem sede.</li>
+        <li>Evite o sol entre 10h e 16h.</li>
+        <li>Ligue para quem mora sozinho, principalmente idosos.</li>
+        <li>Tontura, confusão ou pele quente e seca: procure atendimento. Emergência: SAMU 192.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Atualiza sozinho a cada 30 segundos. Última atualização: <span id="atualizado">-</span>.</p>
+    <p>Protótipo acadêmico (FIAP Global Solution 2026). Leituras das estações Oásis e previsão treinada com dados do INMET.</p>
+  </footer>
+</body>
+</html>

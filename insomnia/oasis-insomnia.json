@@ -1,0 +1,1076 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-11T12:00:00.000Z",
+  "__export_source": "oasis-gs-2026",
+  "resources": [
+    {
+      "_id": "wrk_oasis",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "Oásis API (GS 2026)",
+      "description": "Testes manuais da API Oásis. Rode os pedidos na ordem dos números.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_oasis",
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": null,
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1
+    },
+    {
+      "_id": "env_local",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Local (uvicorn)",
+      "data": {
+        "base_url": "http://localhost:8000",
+        "chave_posto": "troque-esta-chave-do-posto"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "chave_posto"
+        ]
+      },
+      "color": "#7a2e0e",
+      "isPrivate": false,
+      "metaSortKey": 2
+    },
+    {
+      "_id": "env_vm",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Servidor IIS (VM)",
+      "data": {
+        "base_url": "http://api.oasis.local",
+        "chave_posto": "COLE-AQUI-A-CHAVE-DO-SERVIDOR"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "chave_posto"
+        ]
+      },
+      "color": "#1f6f43",
+      "isPrivate": false,
+      "metaSortKey": 3
+    },
+    {
+      "_id": "fld_1",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "1. Usuários",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 1
+    },
+    {
+      "_id": "req_01",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "01 · Criar usuário (201)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/usuarios",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"apelido\": \"Dona Cida\",\n  \"perfil\": \"Idoso\",\n  \"bairro\": \"Vila Mariana\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_02",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "02 · Criar usuário inválido (400)",
+      "description": "Mostra o formato de erro (Problem Details) com a lista de campos em português.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/usuarios",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"apelido\": \"A\",\n  \"perfil\": \"Astronauta\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_03",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "03 · Consultar usuário (200)",
+      "description": "Só o posto consulta usuários: ids sequenciais permitiriam listar idosos por bairro.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/usuarios/1",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_04",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "04 · Usuário inexistente (404)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/usuarios/9999",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 4,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_2",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "2. Pontos de apoio",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 2
+    },
+    {
+      "_id": "req_05",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "05 · Listar pontos aprovados (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_06",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "06 · Pontos perto de mim (200)",
+      "description": "Ordena pela distância e devolve distanciaMetros.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?lat=-23.5891&lon=-46.6346&raio=3000",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 6,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_07",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "07 · Filtrar só água (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?tipo=Agua",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 7,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_08",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "08 · Sugerir ponto novo (201)",
+      "description": "Todo ponto novo entra como Pendente.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/pontos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Bebedouro da praça\",\n  \"tipo\": \"Agua\",\n  \"endereco\": \"Rua Exemplo, 100\",\n  \"bairro\": \"Vila Mariana\",\n  \"latitude\": -23.588,\n  \"longitude\": -46.634,\n  \"horario\": \"6h às 22h\",\n  \"criadoPorId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 8,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_09",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "09 · Ponto fora de São Paulo (400)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/pontos",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Praia\",\n  \"tipo\": \"Sombra\",\n  \"endereco\": \"Av. Atlântica\",\n  \"bairro\": \"Copacabana\",\n  \"latitude\": -22.97,\n  \"longitude\": -43.18\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 9,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_10",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "10 · Pendentes sem a chave do posto (401)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?status=Pendente",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 10,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_11",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "11 · Pendentes com a chave do posto (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?status=Pendente",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 11,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_12",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "12 · Aprovar ponto 7 (200)",
+      "description": "Use o id devolvido no pedido 08.",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/pontos/7/status",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"Aprovado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 12,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_13",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "13 · Voltar ponto para Pendente (400)",
+      "description": "Regra do domínio: nenhum ponto volta a Pendente.",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/pontos/7/status",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"Pendente\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 13,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_3",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "3. Estações e leituras",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 3
+    },
+    {
+      "_id": "req_14",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "14 · Listar estações (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/estacoes",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 14,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_15",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "15 · Cadastrar estação (201)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/estacoes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"codigo\": \"EST-VM-02\",\n  \"nome\": \"Praça da Árvore\",\n  \"latitude\": -23.6107,\n  \"longitude\": -46.6383\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 15,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_16",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "16 · Cadastrar estação repetida (409)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/estacoes",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"codigo\": \"EST-VM-02\",\n  \"nome\": \"Praça da Árvore\",\n  \"latitude\": -23.6107,\n  \"longitude\": -46.6383\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 16,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_17",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "17 · Leitura de calor forte (201)",
+      "description": "A API recalcula o índice (40,2 °C), classifica como Perigo e abre um alerta.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/leituras",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"codigo\": \"EST-VM-01\",\n  \"temperatura\": 34.0,\n  \"umidade\": 55.0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 17,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_18",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "18 · Leitura impossível (400)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/leituras",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"codigo\": \"EST-VM-01\",\n  \"temperatura\": 75.0,\n  \"umidade\": 55.0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 18,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_19",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "19 · Histórico da estação (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/estacoes/1/leituras?limite=20",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 19,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_4",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "4. Risco e alertas",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 4
+    },
+    {
+      "_id": "req_20",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "20 · Risco agora (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/risco/agora",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 20,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_21",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "21 · Alertas ativos (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/alertas?ativos=true",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 21,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_22",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "22 · Leitura amena (fecha o alerta) (201)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/leituras",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"codigo\": \"EST-VM-01\",\n  \"temperatura\": 24.0,\n  \"umidade\": 60.0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "{{ _.chave_posto }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 22,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_23",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "23 · Histórico de alertas (200)",
+      "description": "",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/alertas?ativos=false",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 23,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_5",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "5. Previsão (IA)",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 5
+    },
+    {
+      "_id": "req_24",
+      "_type": "request",
+      "parentId": "fld_5",
+      "name": "24 · Previsão de amanhã (200)",
+      "description": "Usa as leituras de hoje. Sem leituras no dia, responde 422.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/previsoes/amanha",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 24,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_25",
+      "_type": "request",
+      "parentId": "fld_5",
+      "name": "25 · Simular dia quente de janeiro (200)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/previsoes/simular",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tempMax\": 34.5,\n  \"tempMin\": 22.0,\n  \"tempMedia\": 27.5,\n  \"umidMedia\": 55,\n  \"umidMin\": 35,\n  \"icMax\": 35.5,\n  \"dataAlvo\": \"2027-01-20\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 25,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_26",
+      "_type": "request",
+      "parentId": "fld_5",
+      "name": "26 · Simular dia ameno de julho (200)",
+      "description": "",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/previsoes/simular",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tempMax\": 22.0,\n  \"tempMin\": 14.0,\n  \"tempMedia\": 17.5,\n  \"umidMedia\": 75,\n  \"umidMin\": 55,\n  \"icMax\": 21.5,\n  \"dataAlvo\": \"2027-07-20\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 26,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_6",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "6. Segurança (evidências de Cyber)",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 6
+    },
+    {
+      "_id": "req_27",
+      "_type": "request",
+      "parentId": "fld_6",
+      "name": "27 · SQL injection na busca (200, lista vazia)",
+      "description": "O texto vira parâmetro do SQL, não comando: a lista volta vazia.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?busca=' OR '1'='1",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 27,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_28",
+      "_type": "request",
+      "parentId": "fld_6",
+      "name": "28 · DROP TABLE na busca (200, lista vazia)",
+      "description": "Depois rode de novo o pedido 05: os pontos continuam lá.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos?busca='; DROP TABLE pontos_apoio; --",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 28,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_29",
+      "_type": "request",
+      "parentId": "fld_6",
+      "name": "29 · Chave do posto errada (401)",
+      "description": "A tentativa fica registrada no log da API.",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/pontos/1/status",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"Rejeitado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Chave-Posto",
+          "value": "chute-qualquer"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 29,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_30",
+      "_type": "request",
+      "parentId": "fld_6",
+      "name": "30 · Path traversal (LFI) (404)",
+      "description": "A página pública não sai da sua pasta.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/..%2f..%2f..%2fetc%2fpasswd",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 30,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_7",
+      "_type": "request_group",
+      "parentId": "wrk_oasis",
+      "name": "7. Saúde",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 7
+    },
+    {
+      "_id": "req_31",
+      "_type": "request",
+      "parentId": "fld_7",
+      "name": "31 · Health (200)",
+      "description": "Usado no monitoramento e no teste de falha do Windows Server.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/health",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 31,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}
