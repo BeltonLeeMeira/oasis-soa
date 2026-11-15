@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Segredos e configuração local (nunca versionar)
+.env
+*.env
+!.env.exemplo
+
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+*.tsbuildinfo
+
+# .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
