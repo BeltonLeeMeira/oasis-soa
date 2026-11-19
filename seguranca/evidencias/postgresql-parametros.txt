@@ -1,0 +1,10 @@
+# Prova de prepared statement: log do PostgreSQL 16
+#
+# Pedido: GET /api/pontos?busca=' OR '1'='1   (resposta: 200, lista vazia)
+# Com log_statement = 'all' ligado só durante o teste, o PostgreSQL registra a consulta com os
+# marcadores $1 e $2 e, em separado, os valores. O ataque chega como TEXTO dentro de $2 e nunca vira SQL.
+
+2026-11-10 20:49:43.656 UTC [5021] oasis@oasis LOG:  execute <unnamed>: SELECT pontos_apoio.id, pontos_apoio.nome, pontos_apoio.tipo, pontos_apoio.endereco, pontos_apoio.bairro, pontos_apoio.latitude, pontos_apoio.longitude, pontos_apoio.horario, pontos_apoio.status, pontos_apoio.criado_por_id, pontos_apoio.criado_em, pontos_apoio.avaliado_em 
+	FROM pontos_apoio 
+	WHERE pontos_apoio.status = $1 AND pontos_apoio.nome ILIKE $2::VARCHAR ESCAPE '\' ORDER BY pontos_apoio.nome
+2026-11-10 20:49:43.656 UTC [5021] oasis@oasis DETAIL:  parameters: $1 = 'Aprovado', $2 = '%'' OR ''1''=''1%'

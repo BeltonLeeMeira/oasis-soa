@@ -1,0 +1,5 @@
+  ok    salva e reabre com a mesma senha
+  ok    o arquivo não tem nenhum dado legível
+  ok    senha errada é recusada
+  ok    arquivo alterado é recusado
+  ok    senha curta não é aceita
